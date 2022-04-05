@@ -338,7 +338,6 @@ exit
     spanning-tree mst 3 root primary
     spanning-tree mst 4 root secondary
     spanning-tree mst 5 root secondary
-exit
 
 username cisco algorithm-type sha256 secret cisco
 enable algorithm-type sha256 secret cisco
