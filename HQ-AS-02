@@ -1,0 +1,98 @@
+enable
+configure terminal
+
+hostname HQ-AS-02
+
+vlan 69
+name Blackhole
+vlan 80
+name Guests
+vlan 98
+name Netadmin
+vlan 99
+name servers
+vlan 100
+name ICT
+vlan 110
+name HRM
+vlan 120
+name Facilities
+vlan 130
+name Production
+vlan 140
+name CEO/Management
+vlan 150
+name Marketing
+vlan 160
+name Financial
+vlan 170
+name Logistics
+vlan 180
+name R&D
+exit
+
+interface range fastEthernet 0/1-23
+
+shutdown
+switchport access vlan 69
+
+switchport mode access
+switchport nonegotiate
+switchport port-security mac-address sticky
+switchport port-security maximum 2
+switchport port-security aging static
+switchport port-security aging time 1320
+switchport port-security aging type absolute
+
+spanning-tree bpduguard enable
+spanning-tree portfast
+
+exit
+
+interface fastEthernet 0/24
+ no shutdown
+ switchport access vlan 99
+exit
+
+interface range gigabitEthernet 0/1-2
+switchport mode trunk
+switchport nonegotiate
+switchport trunk allowed vlan all
+switchport trunk native vlan 42
+exit
+
+interface vlan 98
+ipv6 address 2008:a1:2:01DE::5/64
+ipv6 address FD00:AF0:5:01DE::5/64
+exit
+
+spanning-tree mode mst
+spanning-tree mst configuration
+    name A-team
+    instance 1 vlan 100, 110, 120, 150, 160
+    instance 2 vlan 130, 140, 170, 180
+    instance 3 vlan 80
+    instance 4 vlan 98
+    instance 5 vlan 99
+exit
+
+ipv6 route ::/0 2008:a1:2:1de::1
+
+crypto key generate rsa label SSH-Key modulus 1024
+ip ssh rsa keypair-name SSH-Key
+ip ssh version 2
+ip ssh dh min size 1024
+
+line vty 0 4
+login local
+transport input ssh
+exit
+
+line console 0
+login local
+exit
+
+username cisco algorithm-type sha256 secret cisco
+enable algorithm-type sha256 secret cisco
+
+banner motd #Unauthorized access to this device is prohibited!#

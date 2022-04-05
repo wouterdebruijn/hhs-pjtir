@@ -1,0 +1,104 @@
+hostname HQ-EDG-01
+ipv6 unicast-routing
+snmp-server community A-team ro
+
+crypto isakmp policy 10
+ encr aes 256
+ authentication pre-share
+ group 5
+ lifetime 3600
+ exit
+crypto isakmp key cisco address ipv6 2008:A1:2:2FE::2/64
+
+crypto ipsec transform-set A-team esp-aes 256 esp-sha-hmac
+ mode tunnel
+ exit
+
+crypto ipsec profile MyProfile
+ set transform-set A-team
+ exit
+
+zone security internal
+zone security external
+
+ipv6 access-list firewall
+ permit tcp any any seq 10
+ permit udp any any seq 20
+ permit icmp any any seq 30
+ exit
+	
+class-map type inspect match-any firewall-class
+ match protocol tcp
+ match protocol udp
+ match protocol icmp
+ exit
+
+policy-map type inspect firewall-policy
+ class type inspect firewall-class
+  inspect
+  exit
+ exit
+
+zone-pair security I2E source internal destination external 
+ service-policy type inspect firewall-policy
+ exit
+
+
+interface Tunnel0
+ ipv6 address 2008:A1:2::1/64
+ ipv6 ospf 1 area 0
+ tunnel source 2008:A1:2:1FE::2
+ tunnel mode ipsec ipv6
+ tunnel destination 2008:A1:2:2FE::2
+ tunnel protection ipsec profile MyProfile
+ zone-member security internal
+ no shutdown
+ exit
+
+interface GigabitEthernet0/0/0
+ negotiation auto
+ ipv6 address 2008:A1:2:1E0::2/64
+ ipv6 enable
+ ipv6 ospf 1 area 1
+ zone-member security internal
+ no shutdown
+ exit
+
+interface GigabitEthernet0/0/1
+ negotiation auto
+ ipv6 address 2008:A:2:1E2::2/64
+ ipv6 enable
+ ipv6 ospf 1 area 1
+ zone-member security internal
+ no shutdown
+ exit
+
+interface Serial0/1/0
+ ipv6 enable
+ ipv6 address 2008:A1:2:1FE::2/64
+ no shutdown
+ zone-member security external
+ exit
+
+ipv6 route 2008:A1:2:2FE::/64 2008:A1:2:1FE::1
+ipv6 route ::/0 2008:A1:2:1FE::1
+ipv6 router ospf 1
+ router-id 1.1.1.1
+ exit
+
+crypto key generate rsa label SSH-Key modulus 1024
+ip ssh rsa keypair-name SSH-Key
+ip ssh version 2
+ip ssh dh min size 1024
+
+line vty 0 4
+ login local
+ transport input ssh
+ exit
+
+line console 0
+login local
+exit
+
+username cisco algorithm-type sha256 secret cisco
+enable algorithm-type sha256 secret cisco

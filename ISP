@@ -1,0 +1,35 @@
+hostname ISP
+ipv6 unicast-routing
+ipv6 route 2008:A1:2:200::/56 2008:A1:2:2FE::2
+ipv6 route 2008:A1:2:100::/56 2008:A1:2:1FE::2 1
+ipv6 route 2008:A1:2:100::/56 2008:A1:2:1FF::2 10
+
+interface Serial0/2/0
+ ipv6 address 2008:A1:2:2FE::1/64
+ ipv6 enable
+ no shutdown
+ exit
+
+interface Serial0/3/0
+ ipv6 address 2008:A1:2:1FE::1/64
+ ipv6 enable
+ no shutdown
+ exit
+
+interface Serial0/3/1
+ ipv6 address 2008:A1:2:1FF::1/64
+ ipv6 enable
+ no shutdown
+ exit
+
+interface loopback0
+ ipv6 address 2008:dd:69:420::1/64
+ ipv6 enable
+ no shutdown
+ exit
+
+interface fastEthernet0/0
+ ipv6 address 2008:de:42:42::1/64
+ ipv6 enable
+ no shutdown
+ exit
