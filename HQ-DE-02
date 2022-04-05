@@ -309,6 +309,10 @@ interface Vlan42
 
 ipv6 router ospf 1
  router-id 6.6.6.6
+ passive-interface default
+ no passive-interface g1/0/1
+ no passive-interface g1/0/2
+ no passive-interface switchport1
  exit
 
 crypto key generate rsa label SSH-Key modulus 1024
