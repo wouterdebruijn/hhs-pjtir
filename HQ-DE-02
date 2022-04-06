@@ -309,6 +309,10 @@ interface Vlan42
 
 ipv6 router ospf 1
  router-id 6.6.6.6
+ passive-interface default
+ no passive-interface g1/0/1
+ no passive-interface g1/0/2
+ no passive-interface port-channel 1
  exit
 
 crypto key generate rsa label SSH-Key modulus 1024
@@ -339,7 +343,6 @@ exit
     spanning-tree mst 3 root secondary
     spanning-tree mst 4 root primary
     spanning-tree mst 5 root primary
-exit
 
 username cisco algorithm-type sha256 secret cisco
 enable algorithm-type sha256 secret cisco

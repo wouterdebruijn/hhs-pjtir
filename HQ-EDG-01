@@ -8,6 +8,7 @@ crypto isakmp policy 10
  group 5
  lifetime 3600
  exit
+
 crypto isakmp key cisco address ipv6 2008:A1:2:2FE::2/64
 
 crypto ipsec transform-set A-team esp-aes 256 esp-sha-hmac
@@ -42,7 +43,6 @@ policy-map type inspect firewall-policy
 zone-pair security I2E source internal destination external 
  service-policy type inspect firewall-policy
  exit
-
 
 interface Tunnel0
  ipv6 address 2008:A1:2::1/64
@@ -84,6 +84,7 @@ ipv6 route 2008:A1:2:2FE::/64 2008:A1:2:1FE::1
 ipv6 route ::/0 2008:A1:2:1FE::1
 ipv6 router ospf 1
  router-id 1.1.1.1
+ default-information originate
  exit
 
 crypto key generate rsa label SSH-Key modulus 1024

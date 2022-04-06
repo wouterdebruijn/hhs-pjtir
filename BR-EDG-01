@@ -1,5 +1,6 @@
 hostname BR-EDG-01
 ipv6 unicast-routing
+snmp-server community A-team ro
 
 crypto isakmp policy 10
  encr aes 256

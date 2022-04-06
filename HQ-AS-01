@@ -50,10 +50,13 @@ spanning-tree portfast
 exit
 
 interface fastEthernet 0/24
- no shutdown
+ switchport nonegotiate
+ switchport mode access
  switchport access vlan 99
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ no shutdown
 exit
-
 
 interface range gigabitEthernet 0/1-2
 switchport mode trunk
