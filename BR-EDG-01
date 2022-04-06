@@ -9,6 +9,7 @@ crypto isakmp policy 10
  lifetime 3600
  exit
 
+crypto isakmp key cisco address ipv6 2008:A1:2:1FE::2/64
 crypto isakmp key cisco address ipv6 2008:A1:2:1FF::2/64
 
 crypto ipsec transform-set A-team esp-aes 256 esp-sha-hmac
