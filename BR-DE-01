@@ -1,0 +1,284 @@
+hostname BR-DE-01
+snmp-server community A-team ro
+fhrp version vrrp v3
+ipv6 unicast-routing
+
+vlan 69
+name Blackhole
+vlan 80
+name Guests
+vlan 98
+name Netadmin
+vlan 100
+name ICT
+vlan 110
+name HRM
+vlan 120
+name Facilities
+vlan 130
+name Production
+vlan 150
+name Marketing
+vlan 160
+name Financial
+vlan 180
+name R&D
+exit
+
+interface GigabitEthernet1/0/1
+ no switchport
+ no ip address
+ ipv6 address 2008:A1:2:2E0::1/64
+ ipv6 address FD00:AF0:5:2E0::1/64
+ ipv6 enable
+ ipv6 ospf 1 area 2
+ no shutdown
+ exit
+
+interface GigabitEthernet1/0/2
+ no switchport
+ no ip address
+ ipv6 address 2008:A1:2:2E1::1/64
+ ipv6 address FD00:AF0:5:2E1::1/64
+ ipv6 enable
+ ipv6 ospf 1 area 2
+ no shutdown
+ exit
+
+interface range GigabitEthernet1/0/3-4
+ no switchport
+ no ip address
+ channel-group 1 mode active
+ no shutdown
+ exit
+
+interface Port-channel1
+ no switchport
+ no ip address
+ ipv6 address 2008:A1:2:2E4::1/64
+ ipv6 address FD00:AF0:5:2E4::1/64
+ ipv6 ospf 1 area 2
+ no shutdown
+ exit
+
+interface range g1/0/7-24
+ switchport trunk native vlan 42
+ switchport mode trunk
+ shutdown
+ exit
+
+interface range g1/0/5-6
+ switchport trunk native vlan 42
+ switchport mode trunk
+ no shutdown
+ exit
+
+track 1 interface g1/0/1 line-protocol
+track 2 interface g1/0/2 line-protocol
+
+interface Vlan80
+ no ip address
+ ipv6 address 2008:A1:2:2D0::2/64
+ ipv6 address FD00:AF0:5:2D0::2/64
+ ipv6 enable
+ description Guests
+ ipv6 ospf 1 area 2
+ no shutdown
+ ipv6 dhcp relay destination 2008:a1:2:01DF::10
+ vrrp 1 address-family ipv6
+  address FE80:AF:5:02d0::1 primary
+  address 2008:A1:2:02d0::1/64
+  priority 105
+  track 1 decrement 10
+  track 2 decrement 10
+  exit-vrrp
+ exit
+
+interface Vlan98
+ no ip address
+ ipv6 address 2008:A1:2:2DE::2/64
+ ipv6 address FD00:AF0:5:2DE::2/64
+ ipv6 enable
+ ipv6 ospf 1 area 2
+ description netadmin
+ no shutdown
+ vrrp 1 address-family ipv6
+  address FE80:AF:5:02de::1 primary
+  address 2008:A1:2:02de::1/64
+  priority 100
+  track 1 decrement 10
+  track 2 decrement 10
+  exit-vrrp
+ exit
+
+interface Vlan100
+ no ip address
+ ipv6 address 2008:A1:2:200::2/64
+ ipv6 address FD00:AF0:5:200::2/64
+ ipv6 enable
+ description ICT
+ ipv6 ospf 1 area 2
+ ipv6 dhcp relay destination 2008:a1:2:01DF::10
+ no shutdown
+ vrrp 1 address-family ipv6
+  address FE80:AF:5:200::1 primary
+  address 2008:A1:2:200::1/64
+  priority 105
+  track 1 decrement 10
+  track 2 decrement 10
+  exit-vrrp
+ exit
+
+interface Vlan110
+ no ip address
+ ipv6 address 2008:A1:2:201::2/64
+ ipv6 address FD00:AF0:5:201::2/64
+ ipv6 enable
+ ipv6 ospf 1 area 2
+ description HRM
+ ipv6 dhcp relay destination 2008:a1:2:01DF::10
+ no shutdown
+ vrrp 1 address-family ipv6
+  address FE80:AF:5:201::1 primary
+  address 2008:A1:2:201::1/64
+  priority 105
+  track 1 decrement 10
+  track 2 decrement 10
+  exit-vrrp
+ exit
+
+interface Vlan120
+ no ip address
+ ipv6 address 2008:A1:2:202::2/64
+ ipv6 address FD00:AF0:5:202::2/64
+ ipv6 enable
+ ipv6 ospf 1 area 2
+ description Facilities
+ ipv6 dhcp relay destination 2008:a1:2:01DF::10
+ no shutdown
+ vrrp 1 address-family ipv6
+  address FE80:AF:5:202::1 primary
+  address 2008:A1:2:202::1/64
+  priority 105
+  track 1 decrement 10
+  track 2 decrement 10
+  exit-vrrp
+ exit
+
+interface Vlan130
+ no ip address
+ ipv6 address 2008:A1:2:203::2/64
+ ipv6 address FD00:AF0:5:203::2/64
+ ipv6 enable
+ ipv6 ospf 1 area 2
+ description Production
+ ipv6 dhcp relay destination 2008:a1:2:01DF::10
+ no shutdown
+ vrrp 1 address-family ipv6
+  address FE80:AF:5:203::1 primary
+  address 2008:A1:2:203::1/64
+  priority 100
+  track 1 decrement 10
+  track 2 decrement 10
+  exit-vrrp
+ exit
+
+interface Vlan150
+ no ip address
+ ipv6 address 2008:A1:2:205::2/64
+ ipv6 address FD00:AF0:5:205::2/64
+ ipv6 enable
+ description Marketing
+ ipv6 dhcp relay destination 2008:a1:2:01DF::10
+ ipv6 ospf 1 area 2
+ no shutdown
+ vrrp 1 address-family ipv6
+  address FE80:AF:5:205::1 primary
+  address 2008:A1:2:205::1/64
+  priority 105
+  track 1 decrement 10
+  track 2 decrement 10
+  exit-vrrp
+ exit
+
+interface Vlan160
+ no ip address
+ ipv6 enable
+ ipv6 address 2008:A1:2:206::2/64
+ ipv6 address FD00:AF0:5:206::2/64
+ description Financial
+ ipv6 dhcp relay destination 2008:a1:2:01DF::10
+ ipv6 ospf 1 area 2
+ no shutdown
+ vrrp 1 address-family ipv6
+  address FE80:AF:5:206::1 primary
+  address 2008:A1:2:206::1/64
+  priority 105
+  track 1 decrement 10
+  track 2 decrement 10
+  exit-vrrp
+ exit
+
+interface Vlan180
+ no ip address
+ ipv6 address 2008:A1:2:208::2/64
+ ipv6 address FD00:AF0:5:208::2/64
+ ipv6 enable
+ description R&D
+ ipv6 dhcp relay destination 2008:a1:2:01DF::10
+ ipv6 ospf 1 area 2
+ no shutdown
+ vrrp 1 address-family ipv6
+  address FE80:AF:5:208::1 primary
+  address 2008:A1:2:208::1/64
+  priority 100
+  track 1 decrement 10
+  track 2 decrement 10
+  exit-vrrp
+ exit
+
+interface Vlan42
+ no ip address
+ description NATIVE
+ no shutdown
+ exit
+
+ipv6 router ospf 1
+ router-id 7.7.7.7
+ passive-interface default
+ no passive-interface g1/0/1
+ no passive-interface g1/0/2
+ no passive-interface port-channel 1
+ exit
+
+crypto key generate rsa label SSH-Key modulus 1024
+ip ssh rsa keypair-name SSH-Key
+ip ssh version 2
+ip ssh dh min size 1024
+
+line vty 0 4
+login local
+transport input ssh
+exit
+
+line console 0
+login local
+exit
+
+spanning-tree mode mst
+spanning-tree mst configuration
+    name A-team
+    instance 1 vlan 100, 110, 120, 150, 160
+    instance 2 vlan 130, 180
+    instance 3 vlan 80
+    instance 4 vlan 98
+exit
+    spanning-tree mst 1 root primary
+    spanning-tree mst 2 root secondary
+    spanning-tree mst 3 root primary
+    spanning-tree mst 4 root secondary
+
+username cisco algorithm-type sha256 secret cisco
+enable algorithm-type sha256 secret cisco
+
+banner motd #Unauthorized access to this device is prohibited!#
