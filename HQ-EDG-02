@@ -87,6 +87,7 @@ interface Serial0/1/0
 
 ipv6 route 2008:A1:2:2FE::/64 2008:A1:2:1FF::1
 ipv6 route ::/0 2008:A1:2:1FF::1
+
 ipv6 router ospf 1
  router-id 1.1.1.2
  default-information originate metric 150
