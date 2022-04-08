@@ -98,7 +98,7 @@ ipv6 route 2008:A1:2:1FE::/64 2008:A1:2:2FE::1
 ipv6 route 2008:A1:2:1FF::/64 2008:A1:2:2FE::1
 ipv6 route ::/0 2008:A1:2:2FE::1
 ipv6 router ospf 1
- router-id 3.3.3.3
+ router-id 1.2.1.1
  exit
 
 crypto key generate rsa label SSH-Key modulus 1024
