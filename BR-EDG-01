@@ -84,16 +84,8 @@ interface GigabitEthernet0/0/0
  exit
 
 interface GigabitEthernet0/0/1
- negotiation auto
- ipv6 address 2008:A1:2:2E2::2/64
- ipv6 enable
- ipv6 ospf 1 area 2
- zone-member security internal
- no shutdown
- exit
-
-interface Serial0/1/0
  ipv6 address 2008:A1:2:2FE::2/64
+ ipv6 address FD00:AF0:5:2FE::2/64
  ipv6 enable
  zone-member security external
  no shut
