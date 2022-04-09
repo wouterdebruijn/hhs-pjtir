@@ -348,3 +348,17 @@ username cisco algorithm-type sha256 secret cisco
 enable algorithm-type sha256 secret cisco
 
 banner motd #Unauthorized access to this device is prohibited!#
+
+ipv6 access-list QOS-SSH
+permit tcp any any eq 22
+
+class-map match-all SSH-MAP
+match access-group name QOS-SSH
+    
+policy-map SSH-POLICY
+  class SSH-MAP
+    set precedence 5
+    
+int vlan100
+    service-policy output SSH-POLICY
+    service-policy input SSH-POLICY
