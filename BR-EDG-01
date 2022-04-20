@@ -23,10 +23,9 @@ crypto ipsec profile MyProfile
 zone security internal
 zone security external
 
-ipv6 access-list firewall
- permit tcp any any seq 10
- permit udp any any seq 20
- permit icmp any any seq 30
+ipv6 access-list firewall-hq
+ permit ipv6 2008:a1:2:200::/56 2008:a1:2:100::/56 seq 10
+ permit ipv6 2008:a1:2:100::/56 2008:a1:2:200::/56 seq 20
  exit
 	
 class-map type inspect match-any firewall-class
