@@ -54,7 +54,7 @@ zone-pair security I2E source internal destination external
  exit
 
 zone-pair security E2I source external destination internal
- service-policy type inspect firewall-policy in
+ service-policy type inspect firewall-policy-in
 
 interface Tunnel0
  ipv6 address 2008:A1:2::1/64
