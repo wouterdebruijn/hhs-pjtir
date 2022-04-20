@@ -27,7 +27,7 @@ exit
 
 interface GigabitEthernet1/0/1
  no switchport
- no ip address
+ ip address 172.16.1.2 255.255.255.252
  ipv6 address 2008:A1:2:2E0::1/64
  ipv6 address FD00:AF0:5:2E0::1/64
  ipv6 enable
@@ -75,9 +75,10 @@ interface range g1/0/5-6
 
 track 1 interface g1/0/1 line-protocol
 track 2 interface g1/0/2 line-protocol
+exit
 
 interface Vlan80
- no ip address
+ ip address 10.0.32.2 255.255.248.0
  ipv6 address 2008:A1:2:2D0::2/64
  ipv6 address FD00:AF0:5:2D0::2/64
  ipv6 enable
@@ -95,7 +96,7 @@ interface Vlan80
  exit
 
 interface Vlan98
- no ip address
+ ip address 10.0.56.2 255.255.255.0
  ipv6 address 2008:A1:2:2DE::2/64
  ipv6 address FD00:AF0:5:2DE::2/64
  ipv6 enable
@@ -112,7 +113,7 @@ interface Vlan98
  exit
 
 interface Vlan100
- no ip address
+ ip address 10.0.44.2 255.255.254.0
  ipv6 address 2008:A1:2:200::2/64
  ipv6 address FD00:AF0:5:200::2/64
  ipv6 enable
@@ -130,7 +131,7 @@ interface Vlan100
  exit
 
 interface Vlan110
- no ip address
+ ip address 10.0.46.2 255.255.254.0
  ipv6 address 2008:A1:2:201::2/64
  ipv6 address FD00:AF0:5:201::2/64
  ipv6 enable
@@ -148,7 +149,7 @@ interface Vlan110
  exit
 
 interface Vlan120
- no ip address
+ ip address 10.0.48.2 255.255.254.0
  ipv6 address 2008:A1:2:202::2/64
  ipv6 address FD00:AF0:5:202::2/64
  ipv6 enable
@@ -166,7 +167,7 @@ interface Vlan120
  exit
 
 interface Vlan130
- no ip address
+ ip address 10.0.40.2 255.255.252.0
  ipv6 address 2008:A1:2:203::2/64
  ipv6 address FD00:AF0:5:203::2/64
  ipv6 enable
@@ -184,7 +185,7 @@ interface Vlan130
  exit
 
 interface Vlan150
- no ip address
+ ip address 10.0.50.2 255.255.254.0
  ipv6 address 2008:A1:2:205::2/64
  ipv6 address FD00:AF0:5:205::2/64
  ipv6 enable
@@ -202,7 +203,7 @@ interface Vlan150
  exit
 
 interface Vlan160
- no ip address
+ ip address 10.0.52.2 255.255.254.0 
  ipv6 enable
  ipv6 address 2008:A1:2:206::2/64
  ipv6 address FD00:AF0:5:206::2/64
@@ -220,7 +221,7 @@ interface Vlan160
  exit
 
 interface Vlan180
- no ip address
+ ip address 10.0.54.2 255.255.254.0
  ipv6 address 2008:A1:2:208::2/64
  ipv6 address FD00:AF0:5:208::2/64
  ipv6 enable
@@ -254,7 +255,7 @@ ipv6 router ospf 1
 crypto key generate rsa label SSH-Key modulus 1024
 ip ssh rsa keypair-name SSH-Key
 ip ssh version 2
-ip ssh dh min size 1024
+ip ssh dh min size 2048
 
 line vty 0 4
 login local
@@ -263,6 +264,19 @@ exit
 
 line console 0
 login local
+exit
+
+router ospf 1
+ network 172.16.1.0 0.0.0.3 area 2
+ passive-interface vlan 80
+ passive-interface vlan 98
+ passive-interface vlan 100
+ passive-interface vlan 110
+ passive-interface vlan 120
+ passive-interface vlan 130
+ passive-interface vlan 150
+ passive-interface vlan 160
+ passive-interface vlan 180
 exit
 
 spanning-tree mode mst
