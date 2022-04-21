@@ -23,6 +23,11 @@ crypto ipsec profile MyProfile
 zone security internal
 zone security external
 
+access-list 101 10 permit ip 10.0.0.0 0.0.255.255 10.0.0.0 0.0.255.255
+access-list 101 20 permit ip 172.0.0.0 0.255.255.255 172.0.0.0 0.255.255.255
+access-list 101 30 permit ip 172.0.0.0 0.255.255.255 10.0.0.0 0.0.255.255
+access-list 101 40 permit ip 10.0.0.0 0.0.255.255 172.0.0.0 0.255.255.255
+
 ipv6 access-list firewall-hq
  permit ipv6 2008:a1:2:200::/56 2008:a1:2:100::/56 seq 10
  permit ipv6 2008:a1:2:100::/56 2008:a1:2:200::/56 seq 20
@@ -30,6 +35,7 @@ ipv6 access-list firewall-hq
 	
 class-map type inspect match-any firewall-hq
  match access-group name firewall-hq
+ match access-group 101
  exit
 
 class-map type inspect match-any firewall-class
