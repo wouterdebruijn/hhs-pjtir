@@ -28,8 +28,8 @@ ipv6 access-list firewall-hq
  permit ipv6 2008:a1:2:100::/56 2008:a1:2:200::/56 seq 20
  exit
 	
-class-map type inspect match-any firewall-branch
- match access-group name firewall-branch
+class-map type inspect match-any firewall-hq
+ match access-group name firewall-hq
  exit
 
 class-map type inspect match-any firewall-class
@@ -42,13 +42,13 @@ policy-map type inspect firewall-policy-out
  class type inspect firewall-class
   inspect
   exit
- class type inspect firewall-branch
+ class type inspect firewall-hq
   pass
   exit
  exit
 
 policy-map type inspect firewall-policy-in
- class type inspect firewall-branch
+ class type inspect firewall-hq
   pass
   exit
  exit

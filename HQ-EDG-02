@@ -57,7 +57,8 @@ zone-pair security I2E source internal destination external
  exit
 
 zone-pair security E2I source external destination internal
- service-policy type inspect firewall-policy in
+ service-policy type inspect firewall-policy-in
+ exit
 
 interface Tunnel0
  ip address 172.16.2.5 255.255.255.252
