@@ -28,7 +28,7 @@ ipv6 access-list firewall-branch
  exit
 
 class-map type inspect match-any firewall-branch
- match access-group firewall-branch
+ match access-group name firewall-branch
  exit
 	
 class-map type inspect match-any firewall-class
