@@ -62,7 +62,7 @@ interface fastEthernet 0/24
 exit
 
 interface range gigabitEthernet 0/1-2
-ip dhcp-snooping trust
+ip dhcp snooping trust
 storm-control broadcast level 20
 switchport mode trunk
 switchport nonegotiate
