@@ -60,6 +60,7 @@ zone-pair security E2I source external destination internal
  service-policy type inspect firewall-policy in
 
 interface Tunnel0
+ ip address 172.16.2.5 255.255.255.252
  ipv6 address 2008:A1:2:2::1/64
  ipv6 address FD00:AF0:5:2::1/64
  ipv6 enable
@@ -73,6 +74,7 @@ interface Tunnel0
  exit
 
 interface GigabitEthernet0/0/0
+ ip address 172.16.0.9 255.255.255.252
  negotiation auto
  ipv6 address 2008:A1:2:1E1::2/64
  ipv6 address FD00:AF0:5:1E1::2/64
@@ -83,6 +85,7 @@ interface GigabitEthernet0/0/0
  exit
 
 interface GigabitEthernet0/0/1
+ ip address 172.16.0.13 255.255.255.252
  negotiation auto
  ipv6 address 2008:A1:2:1E3::2/64
  ipv6 address FD00:AF0:5:1E3::2/64
@@ -93,6 +96,7 @@ interface GigabitEthernet0/0/1
  exit
 
 interface Serial0/1/0
+ ip address 172.0.0.6 255.255.255.252
  ipv6 address 2008:A1:2:1FF::2/64
  ipv6 address FD00:AF0:5:1FF::2/64
  ipv6 enable
