@@ -22,27 +22,39 @@ crypto ipsec profile MyProfile
 zone security internal
 zone security external
 
-ipv6 access-list firewall
- permit tcp any any seq 10
- permit udp any any seq 20
- permit icmp any any seq 30
+ipv6 access-list firewall-branch
+ permit ipv6 2008:a1:2:200::/56 2008:a1:2:100::/56 seq 10
+ permit ipv6 2008:a1:2:100::/56 2008:a1:2:200::/56 seq 20
  exit
-	
+
+class-map type inspect match-any firewall-branch
+ match access-group firewall-branch
+ exit
+
 class-map type inspect match-any firewall-class
  match protocol tcp
  match protocol udp
  match protocol icmp
  exit
 
-policy-map type inspect firewall-policy
+policy-map type inspect firewall-policy-out
  class type inspect firewall-class
   inspect
   exit
+ class type inspect firewall-branch
+  pass
+  exit
  exit
 
+policy-map type inspect firewall-policy-in
+ class type inspect 
+
 zone-pair security I2E source internal destination external 
- service-policy type inspect firewall-policy
+ service-policy type inspect firewall-policy-out
  exit
+
+zone-pair security E2I source external destination internal
+ service-policy type inspect firewall-policy-in
 
 interface Tunnel0
  ipv6 address 2008:A1:2::1/64
