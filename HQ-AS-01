@@ -58,6 +58,7 @@ interface fastEthernet 0/24
  spanning-tree bpduguard enable
  spanning-tree portfast
  no shutdown
+ ip dhcp snooping trust
 exit
 
 interface range gigabitEthernet 0/1-2
