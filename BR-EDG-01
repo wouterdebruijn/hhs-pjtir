@@ -48,7 +48,10 @@ policy-map type inspect firewall-policy
  exit
 
 policy-map type inspect firewall-policy-in
- class type inspect 
+ class type inspect firewall-branch
+  pass
+  exit
+ exit
 
 zone-pair security I2E source internal destination external 
  service-policy type inspect firewall-policy-out
