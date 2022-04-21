@@ -31,6 +31,8 @@ vlan 180
 name R&D
 exit
 
+ip dhcp snooping
+
 interface range fastEthernet 0/1-23
 
 shutdown
@@ -55,6 +57,8 @@ interface fastEthernet 0/24
 exit
 
 interface range gigabitEthernet 0/1-2
+ip dhcp snooping trust
+storm-control broadcast level 20
 switchport mode trunk
 switchport nonegotiate
 switchport trunk allowed vlan all
