@@ -38,7 +38,7 @@ class-map type inspect match-any firewall-class
  match protocol icmp
  exit
 
-policy-map type inspect firewall-policy
+policy-map type inspect firewall-policy-out
  class type inspect firewall-class
   inspect
   exit
