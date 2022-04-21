@@ -45,7 +45,7 @@ zone-pair security I2E source internal destination external
  exit
 
 interface Tunnel0
- ip address 172.0.2.1 255.255.255.252
+ ip address 172.16.2.1 255.255.255.252
  ipv6 address 2008:A1:2::1/64
  ipv6 address FD00:AF0:5::1/64
  ipv6 ospf 1 area 0
